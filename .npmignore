@@ -1,0 +1,11 @@
+tests/
+.github/
+Makefile
+.editorconfig
+.prettierrc
+.gitignore
+AGENTS.md
+CONTRIBUTING.md
+tsconfig.json
+eslint.config.js
+bun.lock
