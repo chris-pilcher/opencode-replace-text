@@ -1,0 +1,32 @@
+{
+    "name": "opencode-replace-text",
+    "version": "0.0.0",
+    "description": "OpenCode plugin to replace Unicode characters (smart quotes, em dashes, arrows, invisible chars) with plain ASCII equivalents",
+    "license": "MIT",
+    "author": "Chris Pilcher",
+    "type": "module",
+    "main": "src/index.ts",
+    "scripts": {
+        "build": "echo \"No source to build yet (src/index.ts not implemented)\"",
+        "test": "bun test",
+        "lint": "bun x eslint . && bun x prettier --check .",
+        "format": "bun x prettier --write .",
+        "ci": "bun run lint && bun run test",
+        "clean": "rm -rf dist node_modules"
+    },
+    "files": [
+        "src/"
+    ],
+    "peerDependencies": {
+        "@opencode-ai/plugin": "*"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@opencode-ai/plugin": "*",
+        "@types/bun": "latest",
+        "eslint": "^10.4.0",
+        "prettier": "^3.0.0",
+        "typescript": "^5.0.0",
+        "typescript-eslint": "^8.59.3"
+    }
+}
