@@ -41,18 +41,21 @@ The plugin was originally created to replace em dashes with regular dashes in AI
 1. User copies `src/index.ts` to `.opencode/plugins/replace-text.ts` (project-local) or `~/.config/opencode/plugins/` (global)
 2. **No `opencode.json` registration needed** - local `.ts` plugins are auto-discovered at startup
 3. For custom replacements, users optionally add to `opencode.json`:
-   ```jsonc
-   {
-       "plugin": [
-           ["./plugins/replace-text.ts", {
-               "replacements": {
-                   "↦": "->",
-                   "↥": "<-"
-               }
-           }]
-       ]
-   }
-   ```
+    ```jsonc
+    {
+        "plugin": [
+            [
+                "./plugins/replace-text.ts",
+                {
+                    "replacements": {
+                        "↦": "->",
+                        "↥": "<-",
+                    },
+                },
+            ],
+        ],
+    }
+    ```
 4. Plugin intercepts AI-generated text and file writes, replacing configured Unicode characters with their ASCII equivalents
 5. Without config, the plugin applies built-in defaults (em dash, en dash, smart quotes). Explicit empty options applies no replacements.
 
@@ -77,8 +80,8 @@ A single file `src/index.ts` containing:
 1. **`replaceText(input: string, replacements: Record<string, string>): string`** - pure function that iterates over a replacements map and applies each replacement. No regex magic, no special cases. Users define what to replace and with what.
 
 2. **`ReplaceTextPlugin: Plugin`** - the OpenCode plugin export. Reads `options?.replacements` from plugin options. Auto-discovered (no options) applies `DEFAULTS`; explicit empty options applies no replacements; explicit replacements applies only those. Registers two hooks:
-   - `"experimental.text.complete"` - replaces characters in AI response text after generation
-   - `"tool.execute.before"` - replaces characters in `write` (content) and `edit` (oldString, newString) tool args before execution
+    - `"experimental.text.complete"` - replaces characters in AI response text after generation
+    - `"tool.execute.before"` - replaces characters in `write` (content) and `edit` (oldString, newString) tool args before execution
 
 ### Plugin options schema
 
@@ -92,14 +95,14 @@ Registered as `[plugin_path, options]` in `opencode.json`.
 
 ### Built-in defaults
 
-| Unicode | Replacement |
-| ------- | ----------- |
-| `\u2014` ( — ) | `-` |
-| `\u2013` ( – ) | `-` |
-| `\u201C` ( “ ) | `"` |
-| `\u201D` ( ” ) | `"` |
-| `\u2018` ( ‘ ) | `'` |
-| `\u2019` ( ’ ) | `'` |
+| Unicode        | Replacement |
+| -------------- | ----------- |
+| `\u2014` ( — ) | `-`         |
+| `\u2013` ( – ) | `-`         |
+| `\u201C` ( “ ) | `"`         |
+| `\u201D` ( ” ) | `"`         |
+| `\u2018` ( ‘ ) | `'`         |
+| `\u2019` ( ’ ) | `'`         |
 
 ### File structure
 
@@ -125,12 +128,12 @@ tests/
 
 ## Alternatives considered
 
-| Approach | Pros | Cons | Verdict |
-| --- | --- | --- | --- |
-| Static hardcoded list in code | Simplest | Can't customize without editing source | Rejected |
-| Environment variable config | Simple for single-file copy | Not idiomatic for OpenCode plugins | Rejected |
-| `opencode.json` plugin options | Idiomatic, discoverable, typed | Slightly more verbose registration | **Chosen** |
-| Separate config file | Isolated config | Two files to copy, not standard plugin pattern | Rejected |
+| Approach                       | Pros                           | Cons                                           | Verdict    |
+| ------------------------------ | ------------------------------ | ---------------------------------------------- | ---------- |
+| Static hardcoded list in code  | Simplest                       | Can't customize without editing source         | Rejected   |
+| Environment variable config    | Simple for single-file copy    | Not idiomatic for OpenCode plugins             | Rejected   |
+| `opencode.json` plugin options | Idiomatic, discoverable, typed | Slightly more verbose registration             | **Chosen** |
+| Separate config file           | Isolated config                | Two files to copy, not standard plugin pattern | Rejected   |
 
 ---
 
@@ -144,8 +147,8 @@ tests/
 6. [ ] `"tool.execute.before"` hook replaces characters in `write` (content) and `edit` (oldString, newString) args
 7. [ ] `tests/index.test.ts` replaces `tests/placeholder.test.ts` with real tests
 8. [ ] `make ci` passes (lint + test)
-10. [ ] README updated: short & succinct, single copy-paste install (no npm/npx section), no `opencode.json` registration needed for basic use, config example for custom replacements, mention em dash origin
-11. [ ] AGENTS.md reviewed for accuracy (no unnecessary changes)
+9. [ ] README updated: short & succinct, single copy-paste install (no npm/npx section), no `opencode.json` registration needed for basic use, config example for custom replacements, mention em dash origin
+10. [ ] AGENTS.md reviewed for accuracy (no unnecessary changes)
 
 ---
 
